@@ -482,6 +482,13 @@ void MainWindow::find() {
   }
 }
 
+void MainWindow::stats()
+{
+    if (activeChild()) {
+      activeChild()->statistics();
+    }
+}
+
 void MainWindow::drawRect(bool checked) {
   if (activeChild()) {
     activeChild()->drawRectangle(checked);
@@ -667,6 +674,7 @@ void MainWindow::updateMenus() {
   showSymbolAct->setEnabled(activeChild() != 0);
   goToRowAct->setEnabled(activeChild() != 0);
   findAct->setEnabled(activeChild() != 0);
+  statsAct->setEnabled(activeChild() != 0);
   undoAct->setEnabled(activeChild() != 0);
   redoAct->setEnabled(activeChild() != 0);
   drawRectAct->setEnabled(activeChild() != 0);
@@ -763,6 +771,9 @@ void MainWindow::updateViewMenu() {
   viewMenu->addAction(showSymbolAct);
   viewMenu->addAction(showFontColumnsAct);
   viewMenu->addAction(drawBoxesAct);
+
+  viewMenu->addSeparator();
+  viewMenu->addAction(statsAct);
 }
 
 void MainWindow::createActions() {
@@ -1019,6 +1030,11 @@ void MainWindow::createActions() {
   findAct->setShortcut(tr("Ctrl+F"));
   connect(findAct, SIGNAL(triggered()), this, SLOT(find()));
 
+  statsAct = new QAction(QIcon::fromTheme("office-chart-line-percentage"),
+                        tr("&Statistics…"), this);
+  statsAct->setShortcut(tr("Ctrl+I"));
+  connect(statsAct, SIGNAL(triggered()), this, SLOT(stats()));
+
   drawRectAct = new QAction(QIcon::fromTheme("rectangle"),
                             tr("Draw/Hide &Rectangle…"), this);
   drawRectAct->setCheckable(true);
@@ -1175,6 +1191,8 @@ void MainWindow::createToolBars() {
   viewToolBar->addAction(DirectTypingAct);
   viewToolBar->addAction(showFontColumnsAct);
   viewToolBar->addAction(drawRectAct);
+  viewToolBar->addSeparator();
+  viewToolBar->addAction(statsAct);
 
   editToolBar = addToolBar(tr("Edit"));
   editToolBar->setObjectName("editToolBar");

@@ -52,6 +52,7 @@
 #include <QSpinBox>
 #include <QSplitter>
 #include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 #include <QTableView>
 #include <QTableWidgetItem>
 #include <QTransform>
@@ -69,6 +70,7 @@ class QGraphicsItem;
 class QGraphicsRectItem;
 class FindDialog;
 class DrawRectangle;
+class StatisticsDialog;
 
 enum undoOperation {
     euoAdd = 1,
@@ -225,10 +227,14 @@ class ChildWidget : public QSplitter {
     void moveTo();
     void goToRow();
     void find();
+    void statistics();
     void findNext(const QString &symbol, Qt::CaseSensitivity mc);
     void findPrev(const QString &symbol, Qt::CaseSensitivity mc);
 
     void boxDragChanged();
+
+    void updateStats(const QModelIndex&, int first, int last);
+    void updateStats(const QModelIndex&, const QModelIndex&);
 
   private:
     void initTable();
@@ -240,6 +246,10 @@ class ChildWidget : public QSplitter {
     void undoSplit(UndoItem& ui, bool bIsRedo = false);
     void undoMoveBack(UndoItem& ui, bool bIsRedo = false);
     void undoMoveBack2(UndoItem& ui, bool bIsRedo = false);
+    void updateSTD();
+    void insertOrUpdateCharStat(const QString&);
+    void removeCharStat(const QString&);
+
     bool symbolShown;
     bool boxesVisible;
     bool drawnRectangle;
@@ -256,13 +266,16 @@ class ChildWidget : public QSplitter {
     QColor imageFontColor;
     QGraphicsItem* m_message;
     FindDialog *f_dialog;
+    StatisticsDialog *statisticsDialog;
+
     DrawRectangle *m_DrawRectangle;
     QFileSystemWatcher *fileWatcher;
+
     void setFileWatcher(const QString & fileName);
 
     void moveSymbolRow(int direction);
     QList<QTableWidgetItem*> takeRow(int row);
-    void calculateTableWidth();
+    void calculateLettersTableWidth();
 
     int currPage;                         /**< current page */
     QVector<QVector<QStringList> > pages; /**< vector with all data/boxes */
@@ -338,9 +351,13 @@ class ChildWidget : public QSplitter {
     void deleteModelItemBox(int row);
 
     QTableView* table;
+    QTableView* statisticsTable;
 
     QStandardItemModel* model;
     QItemSelectionModel* selectionModel;
+
+    QStandardItemModel* statisticsModel;
+    QSortFilterProxyModel* statisticsModelProxy;
 
     QString imageFile;
     QString boxFile;

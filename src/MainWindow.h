@@ -119,6 +119,7 @@ class MainWindow : public QMainWindow {
     void moveTo();
     void goToRow();
     void find();
+    void stats();
     void drawRect(bool checked);
     void undo();
     void redo();
@@ -215,6 +216,7 @@ class MainWindow : public QMainWindow {
     QAction* moveDownAct;
     QAction* goToRowAct;
     QAction* findAct;
+    QAction* statsAct;
     QAction* drawRectAct;
     QAction* undoAct;
     QAction* redoAct;

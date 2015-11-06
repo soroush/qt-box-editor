@@ -28,7 +28,8 @@ FORMS += \
     dialogs/GetRowIDDialog.ui \
     dialogs/SettingsDialog.ui \
     dialogs/FindDialog.ui \
-    dialogs/DrawRectangle.ui
+    dialogs/DrawRectangle.ui \
+    dialogs/StatisticsDialog.ui
 
 SOURCES += src/main.cpp \
     src/MainWindow.cpp \
@@ -39,7 +40,8 @@ SOURCES += src/main.cpp \
     dialogs/GetRowIDDialog.cpp \
     dialogs/ShortCutsDialog.cpp \
     dialogs/FindDialog.cpp \
-    dialogs/DrawRectangle.cpp
+    dialogs/DrawRectangle.cpp \
+    dialogs/Statistics.cpp
 
 HEADERS += src/MainWindow.h \
     src/ChildWidget.h \
@@ -50,7 +52,8 @@ HEADERS += src/MainWindow.h \
     dialogs/GetRowIDDialog.h \
     dialogs/ShortCutsDialog.h \
     dialogs/FindDialog.h \
-    dialogs/DrawRectangle.h
+    dialogs/DrawRectangle.h \
+    dialogs/Statistics.h
 
 RESOURCES = resources/application.qrc \
     resources/QBE-GNOME.qrc \
